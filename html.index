@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Empleados</title>
+</head>
+<body>
+    <h1>Lista de Empleados</h1>
+    <ul>
+        <li>DevOps</li>
+        <li>Dev</li>
+    </ul>
+</body>
+</html>
