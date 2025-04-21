@@ -1,4 +1,4 @@
-name: Build and Push Docker image
+name: Build and Push to Docker Hub
 
 on:
   push:
@@ -10,14 +10,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
+    - name: Checkout repository
       uses: actions/checkout@v3
+
+    - name: Set up Docker image tag
+      id: tag
+      run: echo "TAG=$(date +%Y-%m-%d)" >> $GITHUB_ENV
 
     - name: Log in to Docker Hub
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
     - name: Build Docker image
-      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/empleados-html:latest .
+      run: |
+        docker build -t balacotes/empleados:latest -t balacotes/empleados:$TAG .
 
-    - name: Push to Docker Hub
-      run: docker push ${{ secrets.DOCKER_USERNAME }}/empleados-html:latest
+    - name: Push Docker image
+      run: |
+        docker push balacotes/empleados:latest
+        docker push balacotes/empleados:$TAG
